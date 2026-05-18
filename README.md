@@ -1,9 +1,15 @@
 # SentryForce
 
-SentryForce is a Salesforce-native live event monitoring framework that blends the lightweight platform-event logging with the modular configuration, streaming UI, and extensibility.
+SentryForce is a Salesforce-native security monitoring and response framework that now combines:
 
+- **SentryForce live event monitoring** for application, Apex, Lightning, Platform Events, CDC, and Event Monitoring telemetry
+- **Transaction Security Policy recipes** for real-time blocking and alerting on risky Salesforce activity
+
+This "best of both" repository brings together operational monitoring, anomaly scoring, alerting, Event Log File retrieval, and deployable Salesforce Transaction Security Policies in one repo.
 
 ## What is included
+
+### Core SentryForce platform
 
 - Canonical **`Sentry_Event__c`** / **`Sentry_Alert__c`** / **`Sentry_Retrieval_Job__c`** data model
 - High-volume **`Sentry_Event__e`** platform event ingestion pipeline with queueable persistence
@@ -15,6 +21,20 @@ SentryForce is a Salesforce-native live event monitoring framework that blends t
 - LWC **`sentryMonitoringConsole`** for event viewing, filtering, alert visibility, and retrieval status
 - Batch + scheduler retention cleanup for long-term compliance storage strategies
 - Queueable finalizer hook for async exception capture
+
+### Transaction Security Policy module
+
+This repo also includes deployable Flow-based **Transaction Security Policies** and supporting condition flows for practical Salesforce security controls such as:
+
+- alerting on API anomaly events
+- alerting on credential stuffing detections
+- alerting on suspicious login anomalies
+- alerting on session hijacking indicators
+- alerting on guest user anomalies
+- alerting on suspicious report activity
+- alerting on critical permission assignments
+- blocking Salesforce Inspector Reloaded bulk export behavior
+- blocking attempts to grant Transaction Security exemptions
 
 ## Architecture
 
@@ -30,10 +50,25 @@ SentryForce is a Salesforce-native live event monitoring framework that blends t
 3. **Detection / Alerting**
    - `SentryRiskEngine` applies rule-based anomaly scoring.
    - `SentryAlertService` opens `Sentry_Alert__c` records for risky or high-severity events.
-   - `SentryPlugin` provides triggerable/batchable extension points inspired by Nebula Logger.
+   - Salesforce Transaction Security Policies provide native real-time enforcement and alerts for selected event types.
+   - `SentryPlugin` provides extension points for outbound integrations.
 4. **Presentation**
    - `sentryMonitoringConsole` shows recent events, alerts, and retrieval jobs.
    - The console subscribes to `/event/Sentry_Event__e` for near-real-time refresh.
+
+## Transaction Security Policies included
+
+| Policy | Type | Event Monitored | Description |
+|--------|------|-----------------|-------------|
+| **Alert Critical Permission Assignment** | Alert | `PermissionSetEventStore` | Monitors critical permission assignments and alerts when assigned by non-approved automation/users |
+| **Block Salesforce Inspector Reloaded Export** | Block | `ApiEvent` | Prevents mass data exports exceeding 2,000 rows via browser extensions |
+| **Block Transaction Security Exemption** | Block | `PermissionSetEventStore` | Prevents creation/assignment of TransactionSecurityExempt-related permission changes |
+| **Alert API Anomaly** | Alert | `ApiAnomalyEventStore` | Detects unusual API usage patterns and potential data scraping |
+| **Alert Credential Stuffing** | Alert | `CredentialStuffingEventStore` | Identifies credential stuffing attacks using stolen credentials |
+| **Alert Login Anomaly** | Alert | `LoginAnomalyEventStore` | Monitors login patterns for suspicious behavior |
+| **Alert Session Hijacking** | Alert | `SessionHijackingEventStore` | Detects session hijacking via browser fingerprint analysis |
+| **Alert Guest User Anomaly** | Alert | `GuestUserAnomalyEventStore` | Tracks data access anomalies from guest user permission misconfigurations |
+| **Alert Report Anomaly** | Alert | `ReportAnomalyEventStore` | Monitors report access patterns for unusual data extraction |
 
 ## Data model
 
@@ -81,12 +116,6 @@ Retrieval jobs support:
 - `Off_Hours_Start__c` / `Off_Hours_End__c` = `22:00` / `06:00`
 - `Enable_Live_Stream__c`, `Enable_Event_Monitoring__c`, `Enable_Alerts__c`
 
-### Retention guidance
-
-- Application / platform telemetry uses `Default_Retention_Days__c`.
-- Event Monitoring and ELF discoveries use `Event_Monitoring_Retention_Days__c` for long-term audit retention.
-- Extend `SentryRetentionBatch` or plug in a custom archiver to move expired records into a Big Object or external lakehouse before deletion.
-
 ## Event Monitoring + ELF retrieval flow
 
 1. Open the **SentryForce Monitoring Console** tab.
@@ -96,72 +125,21 @@ Retrieval jobs support:
 5. Each matched log becomes a canonical `Sentry_Event__c` record with `Source_Channel__c = ELF`.
 6. `Sentry_Retrieval_Job__c` is updated with match counts or retrieval errors.
 
-This gives admins a point-and-click retrieval workflow while keeping the storage and alerting pipeline unified.
-
-## Threat detection hooks
-
-`SentryRiskEngine` currently scores practical, explainable detections:
-
-- credential stuffing based on login failure counts
-- session hijack indicators (for example IP mismatch flags)
-- suspicious report/export/download behavior
-- off-hours risky activity
-- Lightning page performance regressions
-- long-running Apex executions and unhandled exceptions
-
-The scoring engine is deliberately simple and testable. Future ML integrations can add new risk enrichments before persistence or implement a `SentryPlugin.Triggerable` channel.
-
-## Apex + Lightning usage examples
-
-### Application logging
-
-```apex
-SentryMonitor.info('CaseService', 'Case update processed successfully');
-SentryMonitor.warn('PaymentGateway', 'Retry threshold approaching');
-SentryMonitor.error('FulfillmentSync', 'Downstream ERP returned an error');
-```
-
-### Exception logging
-
-```apex
-try {
-    update recordsToSave;
-} catch (Exception ex) {
-    SentryMonitor.exception('OrderSyncJob', ex);
-}
-```
-
-### Apex execution tracking
-
-```apex
-Long started = DateTime.now().getTime();
-// perform work
-SentryMonitor.trackApexExecution(
-    'NightlySettlementBatch',
-    DateTime.now().getTime() - started,
-    'SettlementRun',
-    JSON.serialize(new Map<String, Object>{ 'recordsProcessed' => 1200 })
-);
-```
-
-### CDC and platform event telemetry hooks
-
-```apex
-SentryMonitor.ingestPlatformTelemetry('Order_Status_Changed__e', payload);
-SentryMonitor.ingestCdcTelemetry('Account', 'UPDATE', payload);
-```
-
-### Lightning performance tracking
-
-Add the `sentryMonitoringConsole` LWC to an app/home page or reuse the `recordLightningPerformance` Apex method from a custom LWC to emit page timing data into the same event pipeline.
-
 ## Setup
 
 1. Deploy the metadata in `force-app` to a Salesforce org with Platform Events and Event Monitoring enabled.
-2. Assign access to the custom objects, Apex classes, and the `sentryMonitoringConsole` tab.
+2. Assign access to the custom objects, Apex classes, Lightning components, Flows, and Transaction Security Policies.
 3. Add the **SentryForce Monitoring Console** tab to a Lightning app.
 4. Schedule `SentryRetentionScheduler` for your preferred cleanup cadence.
-5. Create `Sentry_Plugin__mdt` records for any outbound notification classes you want to attach.
+5. Review and customize the policy notification recipients and flow conditions before enabling in production.
+6. Test all blocking Transaction Security Policies in a sandbox first.
+
+## Important notes for Transaction Security Policies
+
+- Some imported policy metadata originally used placeholder or source-specific usernames for email notifications. Review the `<user>` values before deployment.
+- `AlertLoginAnomaly.transactionSecurityPolicy-meta.xml` has been normalized to point to `PolicyCondition_AlertLoginAnomaly`.
+- `AlertCriticalPermissionAs` still contains a sample CI/CD username condition (`cicd-username@company.com`) in its Flow logic and should be customized for your org.
+- `BlockTransactionSecurityE` may require Salesforce platform behavior validation depending on org capabilities and release behavior.
 
 ## Tests
 
