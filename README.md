@@ -171,8 +171,3 @@ The repo includes focused Apex tests for:
 - ingestion + alert creation (`SentryEventIngestionService_Tests`)
 - retention purge logic (`SentryRetentionService_Tests`)
 - ELF retrieval orchestration (`SentryElfRetrievalService_Tests`)
-
-## Source inspiration
-
-- **Nova Salesforce Logger**: simple platform-event-to-record logging, formula-driven flags, retention scheduler
-- **Nebula Logger**: plugin architecture, typed configuration, asynchronous failure hooks, live event streaming, and admin UI patterns
