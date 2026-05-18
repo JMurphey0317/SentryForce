@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Event severity.</description>
+    <label>Severity</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+    <valueSetDefinition>
+        <sorted>false</sorted>
+        <value>
+            <fullName>Info</fullName>
+            <default>true</default>
+            <label>Info</label>
+        </value>
+        <value>
+            <fullName>Warn</fullName>
+            <default>false</default>
+            <label>Warn</label>
+        </value>
+        <value>
+            <fullName>Error</fullName>
+            <default>false</default>
+            <label>Error</label>
+        </value>
+        <value>
+            <fullName>Critical</fullName>
+            <default>false</default>
+            <label>Critical</label>
+        </value>
+        <value>
+            <fullName>Debug</fullName>
+            <default>false</default>
+            <label>Debug</label>
+        </value>
+    </valueSetDefinition>
+    </valueSet>
+</CustomField>

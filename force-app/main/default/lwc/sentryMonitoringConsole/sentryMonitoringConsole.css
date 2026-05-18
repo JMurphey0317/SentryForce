@@ -1,0 +1,37 @@
+.toolbar,
+.retrieval-grid,
+.summary-grid {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.toolbar,
+.retrieval-grid {
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    align-items: end;
+}
+
+.summary-grid {
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+}
+
+.summary-card {
+    background: #f3f3f3;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+}
+
+.summary-label {
+    color: #514f4d;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.summary-value {
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.table-section {
+    padding: 0 1rem 1rem;
+}

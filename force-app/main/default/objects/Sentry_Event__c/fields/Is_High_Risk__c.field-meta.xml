@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Formula flag for risky activity requiring attention.</description>
+    <formula>Risk_Score__c >= 70</formula>
+    <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+    <label>Is High Risk</label>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,61 @@
+<template>
+    <lightning-card title="SentryForce Monitoring Console" icon-name="utility:warning">
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <div class="toolbar">
+                <lightning-combobox
+                    label="Severity"
+                    value={severityFilter}
+                    options={severityOptions}
+                    onchange={handleSeverityChange}
+                ></lightning-combobox>
+                <lightning-combobox
+                    label="Source"
+                    value={sourceFilter}
+                    options={sourceOptions}
+                    onchange={handleSourceChange}
+                ></lightning-combobox>
+                <lightning-button label="Refresh" variant="brand" onclick={loadDashboard}></lightning-button>
+            </div>
+
+            <div class="summary-grid slds-m-top_medium">
+                <div class="summary-card">
+                    <div class="summary-label">Live stream</div>
+                    <div class="summary-value">{streamStatusLabel}</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Alert threshold</div>
+                    <div class="summary-value">{settings.alertRiskScoreThreshold}</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Default retention</div>
+                    <div class="summary-value">{settings.defaultRetentionDays} days</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Event Monitoring retention</div>
+                    <div class="summary-value">{settings.eventMonitoringRetentionDays} days</div>
+                </div>
+            </div>
+
+            <div class="retrieval-grid slds-m-top_medium">
+                <lightning-input label="ELF Event Types" value={eventTypesInput} onchange={handleEventTypesChange}></lightning-input>
+                <lightning-input type="datetime-local" label="Start" value={retrievalStart} onchange={handleRetrievalStartChange}></lightning-input>
+                <lightning-input type="datetime-local" label="End" value={retrievalEnd} onchange={handleRetrievalEndChange}></lightning-input>
+                <lightning-button label="Queue ELF Retrieval" onclick={handleQueueRetrieval}></lightning-button>
+            </div>
+        </div>
+
+        <template if:true={errorMessage}>
+            <div class="slds-text-color_error slds-p-horizontal_medium slds-p-bottom_medium">{errorMessage}</div>
+        </template>
+
+        <div class="table-section">
+            <lightning-datatable key-field="Id" data={events} columns={eventColumns} hide-checkbox-column></lightning-datatable>
+        </div>
+        <div class="table-section">
+            <lightning-datatable key-field="Id" data={alerts} columns={alertColumns} hide-checkbox-column></lightning-datatable>
+        </div>
+        <div class="table-section slds-p-bottom_medium">
+            <lightning-datatable key-field="Id" data={retrievalJobs} columns={retrievalColumns} hide-checkbox-column></lightning-datatable>
+        </div>
+    </lightning-card>
+</template>
