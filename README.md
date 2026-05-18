@@ -1,8 +1,7 @@
 # SentryForce
 
-SentryForce is a Salesforce-native live event monitoring framework that blends the lightweight platform-event logging pattern from Nova Salesforce Logger with the modular configuration, streaming UI, and extensibility patterns from Nebula Logger.
+SentryForce is a Salesforce-native live event monitoring framework that blends the lightweight platform-event logging with the modular configuration, streaming UI, and extensibility.
 
-> Note: `DarkFenrir_Logger` and `Automation_Error_Log` were not accessible during implementation, so this repo integrates the strongest verifiable ideas from the accessible source repositories and leaves explicit extension hooks for additional private patterns.
 
 ## What is included
 
