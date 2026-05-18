@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Related ELF retrieval request.</description>
+    <label>Retrieval Job</label>
+    <referenceTo>Sentry_Retrieval_Job__c</referenceTo>
+    <relationshipLabel>Sentry Events</relationshipLabel>
+    <relationshipName>SentryEvents</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

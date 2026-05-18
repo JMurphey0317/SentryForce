@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Telemetry source family.</description>
+    <label>Source Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+    <valueSetDefinition>
+        <sorted>false</sorted>
+        <value>
+            <fullName>Application</fullName>
+            <default>true</default>
+            <label>Application</label>
+        </value>
+        <value>
+            <fullName>Platform Event</fullName>
+            <default>false</default>
+            <label>Platform Event</label>
+        </value>
+        <value>
+            <fullName>CDC</fullName>
+            <default>false</default>
+            <label>CDC</label>
+        </value>
+        <value>
+            <fullName>Event Monitoring</fullName>
+            <default>false</default>
+            <label>Event Monitoring</label>
+        </value>
+        <value>
+            <fullName>Lightning</fullName>
+            <default>false</default>
+            <label>Lightning</label>
+        </value>
+        <value>
+            <fullName>Apex</fullName>
+            <default>false</default>
+            <label>Apex</label>
+        </value>
+        <value>
+            <fullName>ELF</fullName>
+            <default>false</default>
+            <label>ELF</label>
+        </value>
+    </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <label>Default</label>
+    <protected>false</protected>
+    <values>
+        <field>Default_Retention_Days__c</field>
+        <value xsi:type="xsd:double">90</value>
+    </values>
+    <values>
+        <field>Event_Monitoring_Retention_Days__c</field>
+        <value xsi:type="xsd:double">365</value>
+    </values>
+    <values>
+        <field>Alert_Risk_Score_Threshold__c</field>
+        <value xsi:type="xsd:double">70</value>
+    </values>
+    <values>
+        <field>Login_Failure_Threshold__c</field>
+        <value xsi:type="xsd:double">5</value>
+    </values>
+    <values>
+        <field>Bulk_Download_Threshold__c</field>
+        <value xsi:type="xsd:double">200</value>
+    </values>
+    <values>
+        <field>Apex_Performance_Threshold_Ms__c</field>
+        <value xsi:type="xsd:double">3000</value>
+    </values>
+    <values>
+        <field>Page_Performance_Threshold_Ms__c</field>
+        <value xsi:type="xsd:double">2500</value>
+    </values>
+    <values>
+        <field>Off_Hours_Start__c</field>
+        <value xsi:type="xsd:string">22:00</value>
+    </values>
+    <values>
+        <field>Off_Hours_End__c</field>
+        <value xsi:type="xsd:string">06:00</value>
+    </values>
+    <values>
+        <field>Enable_Live_Stream__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Enable_Event_Monitoring__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Enable_Alerts__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+</CustomMetadata>

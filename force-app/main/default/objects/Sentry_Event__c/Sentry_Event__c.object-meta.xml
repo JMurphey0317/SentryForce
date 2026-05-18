@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Canonical monitoring event envelope.</description>
+    <enableActivities>false</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <label>Sentry Event</label>
+    <nameField>
+        <displayFormat>SE-{000000}</displayFormat>
+        <label>Sentry Event Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Sentry Events</pluralLabel>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

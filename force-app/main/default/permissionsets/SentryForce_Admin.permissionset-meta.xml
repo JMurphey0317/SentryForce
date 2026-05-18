@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses><apexClass>SentryAlertService</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>SentryElfRetrievalQueueable</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>SentryElfRetrievalService</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>SentryEventIngestQueueable</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>SentryEventIngestionService</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>SentryMonitor</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>SentryMonitoringController</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>SentryPlugin</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>SentryQueueableFinalizer</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>SentryRetentionBatch</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>SentryRetentionScheduler</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>SentryRetentionService</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>SentryRiskEngine</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>SentrySettings</apexClass><enabled>true</enabled></classAccesses>
+    <description>Access to the SentryForce monitoring console and data model.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>SentryForce Admin</label>
+    <objectPermissions>
+        <allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords><object>Sentry_Event__c</object><viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords><object>Sentry_Alert__c</object><viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords><object>Sentry_Retrieval_Job__c</object><viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <tabSettings><tab>SentryForce_Console</tab><visibility>Visible</visibility></tabSettings>
+</PermissionSet>
